@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    background-color: #080b0f;
+    color-scheme: dark;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    margin: 0;
+    font-family: "JetBrains Mono", monospace;
+    background-color: #080b0f;
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #0d1117;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #243046;
+    border-radius: 2px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #00a89e;
+  }
+
+  ::selection {
+    background: rgba(0, 212, 200, 0.25);
+    color: #00d4c8;
+  }
+}
+
+@layer utilities {
+  .glow-lotus {
+    box-shadow: 0 0 20px rgba(0, 212, 200, 0.2), 0 0 40px rgba(0, 212, 200, 0.05);
+  }
+
+  .glow-prime {
+    box-shadow: 0 0 20px rgba(200, 168, 75, 0.2), 0 0 40px rgba(200, 168, 75, 0.05);
+  }
+
+  .text-glow-lotus {
+    text-shadow: 0 0 20px rgba(0, 212, 200, 0.6);
+  }
+
+  .scanline::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.03) 2px,
+      rgba(0, 0, 0, 0.03) 4px
+    );
+    pointer-events: none;
+  }
+
+  .border-lotus {
+    border-color: rgba(0, 212, 200, 0.3);
+  }
+
+  .border-prime {
+    border-color: rgba(200, 168, 75, 0.3);
+  }
+}
