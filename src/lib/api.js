@@ -1,4 +1,5 @@
 const BASE_URL = "https://api.warframestat.us";
+const IMG_CDN = "https://cdn.warframestat.us/img";
 
 export async function searchItems(query, limit = 8) {
   if (!query || query.trim().length < 2) return [];
@@ -17,6 +18,8 @@ export async function searchItems(query, limit = 8) {
     name: item.name ?? "Unknown",
     type: item.type ?? item.category ?? "",
     uniqueName: item.uniqueName ?? "",
-    imageUrl: item.wikiaThumbnail ?? item.imageUrl ?? null,
+    imageUrl: item.imageName
+      ? `${IMG_CDN}/${item.imageName}`
+      : item.wikiaThumbnail ?? null,
   }));
 }
