@@ -1,11 +1,5 @@
 const BASE_URL = "https://api.warframestat.us";
 
-/**
- * Search items by name query.
- * @param {string} query
- * @param {number} limit
- * @returns {Promise<Array<{ name: string, type: string }>>}
- */
 export async function searchItems(query, limit = 8) {
   if (!query || query.trim().length < 2) return [];
 
@@ -23,5 +17,6 @@ export async function searchItems(query, limit = 8) {
     name: item.name ?? "Unknown",
     type: item.type ?? item.category ?? "",
     uniqueName: item.uniqueName ?? "",
+    imageUrl: item.wikiaThumbnail ?? item.imageUrl ?? null,
   }));
 }
