@@ -6,7 +6,7 @@ export function WishlistItem({ item, onToggle, onRemove }) {
   return (
     <div
       className={`
-        group flex items-start gap-3 px-3 py-3 rounded-lg border
+        group flex items-center gap-3 px-3 py-2.5 rounded-lg border
         transition-all duration-200
         ${item.done
           ? "bg-void-900/40 border-void-700/40 opacity-50"
@@ -14,12 +14,11 @@ export function WishlistItem({ item, onToggle, onRemove }) {
         }
       `}
     >
-      {/* Checkbox */}
       <button
         onClick={() => onToggle(item.id)}
         aria-label={item.done ? "Mark as not obtained" : "Mark as obtained"}
         className={`
-          mt-0.5 w-4 h-4 rounded border flex-shrink-0
+          w-4 h-4 rounded border flex-shrink-0
           flex items-center justify-center
           transition-all duration-150
           ${item.done
@@ -35,14 +34,22 @@ export function WishlistItem({ item, onToggle, onRemove }) {
         )}
       </button>
 
-      {/* Content */}
+      <div className="w-8 h-8 flex-shrink-0 rounded bg-void-900 overflow-hidden flex items-center justify-center">
+        {item.imageUrl ? (
+          <img
+            src={item.imageUrl}
+            alt=""
+            className="w-full h-full object-contain"
+            onError={(e) => { e.currentTarget.style.display = "none"; }}
+          />
+        ) : (
+          <div className={`w-1.5 h-1.5 rounded-full ${config.dot}`} />
+        )}
+      </div>
+
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 flex-wrap">
-          <span
-            className={`text-sm font-mono ${
-              item.done ? "line-through text-gray-600" : "text-gray-100"
-            }`}
-          >
+          <span className={`text-sm font-mono ${item.done ? "line-through text-gray-600" : "text-gray-100"}`}>
             {item.name}
           </span>
           <span className={`text-xs px-1.5 py-0.5 rounded font-display font-semibold tracking-wider ${config.badge}`}>
@@ -50,13 +57,10 @@ export function WishlistItem({ item, onToggle, onRemove }) {
           </span>
         </div>
         {item.note && (
-          <p className="text-xs text-gray-600 mt-0.5 font-mono truncate">
-            {item.note}
-          </p>
+          <p className="text-xs text-gray-600 mt-0.5 font-mono truncate">{item.note}</p>
         )}
       </div>
 
-      {/* Remove */}
       <button
         onClick={() => onRemove(item.id)}
         aria-label="Remove item"

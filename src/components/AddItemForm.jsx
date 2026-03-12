@@ -4,13 +4,20 @@ import { Autocomplete } from "./Autocomplete";
 
 export function AddItemForm({ onAdd }) {
   const [name, setName] = useState("");
+  const [imageUrl, setImageUrl] = useState(null);
   const [category, setCategory] = useState("Warframe");
   const [note, setNote] = useState("");
 
+  const handleSelect = (suggestion) => {
+    setName(suggestion.name);
+    setImageUrl(suggestion.imageUrl ?? null);
+  };
+
   const submit = () => {
     if (!name.trim()) return;
-    onAdd({ name, category, note });
+    onAdd({ name, category, note, imageUrl });
     setName("");
+    setImageUrl(null);
     setNote("");
   };
 
@@ -18,8 +25,8 @@ export function AddItemForm({ onAdd }) {
     <div className="bg-void-800 border border-void-600 rounded-lg p-4 space-y-3">
       <Autocomplete
         value={name}
-        onChange={setName}
-        onSelect={setName}
+        onChange={(val) => { setName(val); setImageUrl(null); }}
+        onSelect={handleSelect}
         placeholder="Search item name…"
       />
 
@@ -60,7 +67,7 @@ export function AddItemForm({ onAdd }) {
           w-full py-2 rounded text-sm font-display font-semibold
           tracking-widest uppercase
           bg-lotus/10 border border-lotus/30 text-lotus
-          hover:bg-lotus/20 hover:border-lotus/60 hover:glow-lotus
+          hover:bg-lotus/20 hover:border-lotus/60
           active:scale-[0.99] transition-all duration-150
         "
       >

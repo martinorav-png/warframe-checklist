@@ -35,15 +35,11 @@ export function Autocomplete({ value, onChange, onSelect, placeholder }) {
         if (!cancelled) setLoading(false);
       });
 
-    return () => {
-      cancelled = true;
-    };
+    return () => { cancelled = true; };
   }, [debouncedValue]);
 
   const handleKeyDown = (e) => {
-    if (!open) {
-      return;
-    }
+    if (!open) return;
     if (e.key === "ArrowDown") {
       e.preventDefault();
       setActiveIndex((i) => Math.min(i + 1, suggestions.length - 1));
@@ -60,7 +56,7 @@ export function Autocomplete({ value, onChange, onSelect, placeholder }) {
   };
 
   const pick = (suggestion) => {
-    onSelect(suggestion.name);
+    onSelect(suggestion);
     setSuggestions([]);
     setOpen(false);
     setActiveIndex(-1);
@@ -107,7 +103,7 @@ export function Autocomplete({ value, onChange, onSelect, placeholder }) {
               key={s.uniqueName || i}
               onMouseDown={() => pick(s)}
               className={`
-                flex items-center justify-between px-3 py-2 cursor-pointer
+                flex items-center gap-3 px-3 py-2 cursor-pointer
                 text-sm transition-colors duration-100 select-none
                 ${i === activeIndex
                   ? "bg-lotus/10 text-lotus"
@@ -116,9 +112,21 @@ export function Autocomplete({ value, onChange, onSelect, placeholder }) {
                 ${i !== suggestions.length - 1 ? "border-b border-void-700" : ""}
               `}
             >
-              <span className="font-mono truncate">{s.name}</span>
+              <div className="w-8 h-8 flex-shrink-0 rounded overflow-hidden bg-void-900 flex items-center justify-center">
+                {s.imageUrl ? (
+                  <img
+                    src={s.imageUrl}
+                    alt=""
+                    className="w-full h-full object-contain"
+                    onError={(e) => { e.currentTarget.style.display = "none"; }}
+                  />
+                ) : (
+                  <span className="text-gray-700 text-xs">?</span>
+                )}
+              </div>
+              <span className="font-mono truncate flex-1">{s.name}</span>
               {s.type && (
-                <span className="text-xs text-gray-600 ml-3 flex-shrink-0 uppercase tracking-wider">
+                <span className="text-xs text-gray-600 flex-shrink-0 uppercase tracking-wider">
                   {s.type}
                 </span>
               )}
